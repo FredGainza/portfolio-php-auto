@@ -2,6 +2,7 @@
 include 'toolbox.php';
 
 $connexion = new PDO("mysql:host=localhost:3306;dbname=cars;charset=UTF8", "kopa", "gccC6!04");
+// $connexion = new PDO("mysql:host=localhost:3306;dbname=cars;charset=UTF8", "root", "");
 // dumpPre($_POST);exit;
 if (isset($_GET)) {
     if (isset($_GET['delete']) && $_GET['delete'] === 'suppression') {
@@ -142,14 +143,14 @@ if (isset($_GET)) {
             border: 1px solid black;
             }
 
-            td {
+            th, td {
             border: 1px solid black;
             text-align: right;
             width: auto;
             padding: 10px 20px;
             }
 
-            thead td {
+            thead th {
             background-color: #3f492c;
             color: white;
             }
@@ -190,9 +191,17 @@ if (isset($_GET)) {
             }
 
             @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
+                .bd-placeholder-img-lg {
+                    font-size: 3.5rem;
+                }
+
             }
+            @media screen and (max-width: 768px) {
+                table td, table th{
+                    padding: 5px 10px;
+                    font-size: .9rem;
+                }
+
             }
         </style>
     </head>
@@ -222,43 +231,43 @@ if (isset($_GET)) {
             ##############################################################################################
             -->
 
-            <div class="container">
-                <form action="" method="POST" class="needs-validation mb-5" enctype="multipart/form-data">
-                    <div class="col-sm-10 offset-sm-1">
+            <div class="container mb-3">
+                <div class="row mx-2">
+                    <form action="" method="POST" class="needs-validation mb-5" enctype="multipart/form-data">
                         <h3>Formulaire de saisie</h3>
                         <div class="form-row">
-                            <div class="col">
+                            <div class="col-md mb-3">
                                 <input type="text" class="form-control" id="marque" name="marque" placeholder="Indiquez la marque" value="<?= (isset($res) && !empty($res)) ? $res->marque : ""; ?>">
                             </div>
-                            <div class="col">
+                            <div class="col-md mb-3">
                                 <input type="text" class="form-control" id="modele" name="modele" placeholder="Indiquez le modèle" value="<?= isset($res) && !empty($res) ? $res->modele : ""; ?>">
                             </div>
-                            <div class="col">
+                            <div class="col-md mb-3">
                                 <input type="number" class="form-control" id="CV" name="CV" placeholder="Indiquez le nombre de cheveaux" value="<?= isset($res) && !empty($res) ? $res->CV : ""; ?>">
                             </div>
                         </div>
 
-                        <div class="form-row mt-3">
-                            <div class="col">
+                        <div class="form-row">
+                            <div class="col-md mb-3">
                                 <input type="text" class="form-control" id="energie" name="energie" placeholder="Indiquez le type d'énergie" value="<?= isset($res) && !empty($res) ? $res->energie : ""; ?>">
                             </div>
-                            <div class="col">
+                            <div class="col-md mb-3">
                                 <input type="text" class="form-control" id="immatriculation" name="immatriculation" placeholder="Indiquez immatriculation" value="<?= isset($res) && !empty($res) ? $res->immatriculation : ""; ?>">
                             </div>
                         </div>
 
-                        <div class="form-row mt-3">
-                            <div class="col">
+                        <div class="form-row">
+                            <div class="col-md mb-3">
                                 <div class="form-group custom-file">
                                     <input type="file" class="custom-file-input" id="image" name="image">
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                    <label class="custom-file-label" for="customFile">Choisissez une image</label>
                                 </div>
                             </div>
                         </div>
                         <input type="hidden" name="reset" value="<?= isset($res) && !empty($res) ? "1" : "0"; ?>">
                         <button type="submit" class="btn btn-dark btn-block mt-3"><?= isset($res) && !empty($res) ? "Mise à jour" : "Ajouter"; ?></button>
-                    </div>
-                </form>
+                    </form>
+                </div>
                 <hr class="ligneSeparation">
 
                 <?php
@@ -393,75 +402,75 @@ if (isset($_GET)) {
                 //print_r($resultats);
                 ?>
 
-
-                <table class="my-3 w-100">
-                    <thead>
-                        <tr>
-                            <td>Id</td>
-                            <td>Photo</td>
-                            <td>Marque
-                                <div class="btn-group" role="group" aria-label="Menu déroulant">
-                                    <button id="affichageMarque" type="button" class="btn white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                    <div class="dropdown-menu" aria-labelledby="affichageMarque">
-                                        <a class="dropdown-item" href="?affichage=MarqueCroissant">Affichage par ordre croissant</a>
-                                        <a class="dropdown-item" href="?affichage=MarqueDecroissant">Affichage par ordre decroissant</a>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>Modèle
-                                <div class="btn-group" role="group" aria-label="Menu déroulant">
-                                    <button id="affichageModel" type="button" class="btn white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                    <div class="dropdown-menu" aria-labelledby="affichageModel">
-                                        <a class="dropdown-item" href="?affichage=ModeleCroissant">Affichage par ordre croissant</a>
-                                        <a class="dropdown-item" href="?affichage=ModeleDecroissant">Affichage par ordre decroissant</a>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>CV
-                                <div class="btn-group" role="group" aria-label="Menu déroulant">
-                                    <button id="affichageCV" type="button" class="btn white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                    <div class="dropdown-menu" aria-labelledby="affichageCV">
-                                        <a class="dropdown-item" href="?affichage=CVCroissant">Affichage par ordre croissant</a>
-                                        <a class="dropdown-item" href="?affichage=CVDecroissant">Affichage par ordre decroissant</a>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>Energie
-                                <div class="btn-group" role="group" aria-label="Menu déroulant">
-                                    <button id="affichageEnergie" type="button" class="btn white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                    <div class="dropdown-menu" aria-labelledby="affichageEnergie">
-                                        <a class="dropdown-item" href="?affichage=EnergieCroissant">Affichage par ordre croissant</a>
-                                        <a class="dropdown-item" href="?affichage=EnergieDecroissant">Affichage par ordre decroissant</a>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>Immatriculation</td>
-                            <td>Edition</td>
-                            <td>Suppression</td>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <?php foreach ($resultats as $value) : ?>
+                <div class="row mx-2">
+                    <table class="my-3 w-100">
+                        <thead>
                             <tr>
-                                <td><?= $value->id; ?></td>
-                                <td><a href="images/<?= $value->image; ?>" target="_blank"><img src="images/miniatures/<?= $value->image; ?>"></a></td>
-                                <td><?= $value->marque; ?></td>
-                                <td><?= $value->modele; ?></td>
-                                <td><?= $value->CV; ?></td>
-                                <td><?= $value->energie; ?></td>
-                                <td><?= $value->immatriculation; ?></td>
-                                <td><button type="submit" class="btn btn-info btn-sm"><a href="?edit=edition&id=<?= $value->id ?>" class="text-white">EDITER</a></button></td>
-                                <td><button type="submit" class="btn btn-danger btn-sm"><a href="?delete=suppression&id=<?= $value->id ?>" class="text-white" onclick="return confirm('Confirmez la suppression de cet élément')">SUPPRIMER</a></button></td>
-                            </tr>
-                            <?php endforeach ?>
-                    </tbody>
+                                <th>Id</th>
+                                <th>Photo</th>
+                                <th>Marque
+                                    <div class="btn-group" role="group" aria-label="Menu déroulant">
+                                        <button id="affichageMarque" type="button" class="btn white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu" aria-labelledby="affichageMarque">
+                                            <a class="dropdown-item" href="?affichage=MarqueCroissant">Affichage par ordre croissant</a>
+                                            <a class="dropdown-item" href="?affichage=MarqueDecroissant">Affichage par ordre decroissant</a>
+                                        </div>
+                                    </div>
+                                </th>
 
-                </table>
+                                <th>Modèle
+                                    <div class="btn-group" role="group" aria-label="Menu déroulant">
+                                        <button id="affichageModel" type="button" class="btn white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu" aria-labelledby="affichageModel">
+                                            <a class="dropdown-item" href="?affichage=ModeleCroissant">Affichage par ordre croissant</a>
+                                            <a class="dropdown-item" href="?affichage=ModeleDecroissant">Affichage par ordre decroissant</a>
+                                        </div>
+                                    </div>
+                                </th>
+
+                                <th>CV
+                                    <div class="btn-group" role="group" aria-label="Menu déroulant">
+                                        <button id="affichageCV" type="button" class="btn white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu" aria-labelledby="affichageCV">
+                                            <a class="dropdown-item" href="?affichage=CVCroissant">Affichage par ordre croissant</a>
+                                            <a class="dropdown-item" href="?affichage=CVDecroissant">Affichage par ordre decroissant</a>
+                                        </div>
+                                    </div>
+                                </th>
+
+                                <th>Energie
+                                    <div class="btn-group" role="group" aria-label="Menu déroulant">
+                                        <button id="affichageEnergie" type="button" class="btn white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu" aria-labelledby="affichageEnergie">
+                                            <a class="dropdown-item" href="?affichage=EnergieCroissant">Affichage par ordre croissant</a>
+                                            <a class="dropdown-item" href="?affichage=EnergieDecroissant">Affichage par ordre decroissant</a>
+                                        </div>
+                                    </div>
+                                </th>
+
+                                <th>Immatriculation</th>
+                                <th>Edition</th>
+                                <th>Suppression</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php foreach ($resultats as $value) : ?>
+                                <tr>
+                                    <td><?= $value->id; ?></td>
+                                    <td><a href="images/<?= $value->image; ?>" target="_blank"><img src="images/miniatures/<?= $value->image; ?>"></a></td>
+                                    <td><?= $value->marque; ?></td>
+                                    <td><?= $value->modele; ?></td>
+                                    <td><?= $value->CV; ?></td>
+                                    <td><?= $value->energie; ?></td>
+                                    <td><?= $value->immatriculation; ?></td>
+                                    <td><button type="submit" class="btn btn-info btn-sm"><a href="?edit=edition&id=<?= $value->id ?>" class="text-white">EDITER</a></button></td>
+                                    <td><button type="submit" class="btn btn-danger btn-sm"><a href="?delete=suppression&id=<?= $value->id ?>" class="text-white" onclick="return confirm('Confirmez la suppression de cet élément')">SUPPRIMER</a></button></td>
+                                </tr>
+                                <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
 
