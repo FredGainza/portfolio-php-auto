@@ -1,7 +1,7 @@
 <?php
 include 'toolbox.php';
 
-$connexion = new PDO("mysql:host=localhost:3306;dbname=cars;charset=UTF8", "kopa", "gccC6!04");
+$connexion = new PDO("mysql:host=localhost:3306;dbname=cars;charset=UTF8", "xxxx", "xxxxxxxx");
 // $connexion = new PDO("mysql:host=localhost:3306;dbname=cars;charset=UTF8", "root", "");
 // dumpPre($_POST);exit;
 if (isset($_GET)) {
